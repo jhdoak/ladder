@@ -8,10 +8,10 @@ class _PlayerChallengeJoin {
   @managedPrimaryKey
   int id;
 
-  @ManagedRelationship(#playerChallenge, isRequired: false)
+  @ManagedRelationship(#playerChallenge)
   Player player;
 
-  @ManagedRelationship(#playerChallenge, isRequired: true)
+  @ManagedRelationship(#playerChallenge)
   Challenge challenge;
 
   bool isChallenger;

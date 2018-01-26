@@ -1,5 +1,7 @@
 import 'harness/app.dart';
+import 'package:ladder_api/model/challenge.dart';
 import 'package:ladder_api/model/player.dart';
+import 'package:ladder_api/model/player_challenge_join.dart';
 
 Future main() async {
   TestApplication app = new TestApplication();
@@ -22,6 +24,34 @@ Future main() async {
         ..ladderPosition = 2
         ..wins = 2
         ..losses = 4
+    ];
+
+    var challenges = [
+      new Challenge()
+        ..challengeStatus = "Active"
+        ..winnerScore = 0
+        ..loserScore = 0,
+      new Challenge()
+        ..challengeStatus = "Complete"
+        ..winnerScore = 10
+        ..loserScore = 3,
+    ];
+
+    var playerChallengeJoins = [
+      new PlayerChallengeJoin()
+        ..player = players[0]
+        ..challenge = challenges[0]
+        ..isChallenger = false
+        ..isDefender = true
+        ..isWinner = null
+        ..isLoser = null,
+      new PlayerChallengeJoin()
+        ..player = players[1]
+        ..challenge = challenges[0]
+        ..isChallenger = true
+        ..isDefender = false
+        ..isWinner = null
+        ..isLoser = null
     ];
 
     await Future.forEach(players, (q) {
@@ -62,6 +92,22 @@ Future main() async {
     expectResponse(
         await app.client.request("/players/500").get(),
         404);
+  });
+
+  test("/players/id/challenges returns player info with challenges", () async {
+    var request = app.client.request("/players/2/challenges");
+
+    expectResponse(
+        await request.get(),
+        200,
+        body: partial({
+          "name": "Fran",
+          "challenges": allOf([
+            containsPair("challengeStatus", isString),
+            containsPair("winnerScore", isNonNegative),
+            containsPair("loserScore", isNonNegative)
+          ])
+        }));
   });
 
 
