@@ -1,18 +1,26 @@
 import '../ladder_api.dart';
+import '../model/player.dart';
 
 class PlayerController extends HTTPController {
-  var players = ["Josiah", "Beatrice", "Ann", "Artemis"];
 
   @httpGet
   Future<Response> getAllPlayers() async {
-    return new Response.ok(players);
+    var query = new Query<Player>();
+    var allPlayers = await query.fetch();
+
+    return new Response.ok(allPlayers);
   }
 
   @httpGet
-  Future<Response> getPlayerByIndex(@HTTPPath("index") int index) async {
-    return (index < 0 || index >= players.length)
+  Future<Response> getPlayerByIndex(@HTTPPath("id") int id) async {
+    var query = new Query<Player>()
+      ..where.id = whereEqualTo(id);
+
+    var question = await query.fetchOne();
+
+    return (question == null)
         ? new Response.notFound()
-        : new Response.ok(players[index]);
+        : new Response.ok(question);
   }
 
 }

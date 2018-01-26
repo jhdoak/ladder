@@ -22,7 +22,15 @@ class LadderApiSink extends RequestSink {
   /// Configuration of database connections, [HTTPCodecRepository] and other per-isolate resources should be done in this constructor.
   LadderApiSink(ApplicationConfiguration appConfig) : super(appConfig) {
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+
+    var dataModel = new ManagedDataModel.fromCurrentMirrorSystem();
+
+    var persistentStore = new PostgreSQLPersistentStore.fromConnectionInfo("ladder", "ladder", "localhost", 5432, "ladder_test");
+
+    context = new ManagedContext(dataModel, persistentStore);
   }
+
+  ManagedContext context;
 
   /// All routes must be configured in this method.
   ///
@@ -33,7 +41,7 @@ class LadderApiSink extends RequestSink {
     // Prefer to use `pipe` and `generate` instead of `listen`.
     // See: https://aqueduct.io/docs/http/request_controller/
     router
-        .route("/players/[:index]")
+        .route("/players/[:id]")
         .generate(() => new PlayerController());
   }
 
