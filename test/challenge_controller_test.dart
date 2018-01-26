@@ -51,6 +51,16 @@ Future main() async {
               matches(capitalFirstLetterRegExp)))
         ]));
   });
+  
+  test("/challenges?status=active returns all active challenges", () async {
+    var request = app.client.request("/challenges?status=active");
+    expectResponse (
+        await request.get(),
+        200,
+        body:
+          everyElement(containsPair("challengeStatus", "Active"))
+    );
+  });
 
   test("/challenges/id returns a single challenge", () async {
     expectResponse(

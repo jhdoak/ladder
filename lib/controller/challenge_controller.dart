@@ -4,8 +4,13 @@ import '../model/challenge.dart';
 class ChallengeController extends HTTPController {
 
   @httpGet
-  Future<Response> getAllChallenges() async {
+  Future<Response> getAllChallenges({@HTTPQuery("status") String statusFilter}) async {
     var query = new Query<Challenge>();
+
+    if (statusFilter != null) {
+      query.where.challengeStatus = whereContainsString(statusFilter);
+    }
+
     var allChallenges = await query.fetch();
 
     return new Response.ok(allChallenges);
