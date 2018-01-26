@@ -1,5 +1,7 @@
 import 'ladder_api.dart';
 
+import 'controller/player_controller.dart';
+
 /// This class handles setting up this application.
 ///
 /// Override methods from [RequestSink] to set up the resources your
@@ -31,10 +33,8 @@ class LadderApiSink extends RequestSink {
     // Prefer to use `pipe` and `generate` instead of `listen`.
     // See: https://aqueduct.io/docs/http/request_controller/
     router
-      .route("/example")
-      .listen((request) async {
-        return new Response.ok({"key": "value"});
-      });
+        .route("/players/[:index]")
+        .generate(() => new PlayerController());
   }
 
   /// Final initialization method for this instance.

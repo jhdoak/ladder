@@ -1,7 +1,7 @@
 name: ladder_api
-description: A web server application.
+description: A web server application to manage sports ladders
 version: 0.0.1
-author: stable|kernel <jobs@stablekernel.com>
+author: Justin Doak <justin@jhdoak.com>
 
 environment:
   sdk: '>=1.20.0 <2.0.0'
