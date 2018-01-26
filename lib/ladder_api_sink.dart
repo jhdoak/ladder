@@ -1,6 +1,7 @@
 import 'ladder_api.dart';
 
 import 'controller/player_controller.dart';
+import 'controller/challenge_controller.dart';
 
 /// This class handles setting up this application.
 ///
@@ -43,6 +44,10 @@ class LadderApiSink extends RequestSink {
     router
         .route("/players/[:id]")
         .generate(() => new PlayerController());
+
+    router
+        .route("/challenges/[:id]")
+        .generate(() => new ChallengeController());
   }
 
   /// Final initialization method for this instance.

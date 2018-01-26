@@ -4,7 +4,7 @@ import 'package:ladder_api/model/player.dart';
 Future main() async {
   TestApplication app = new TestApplication();
 
-  final nameRegExp = new RegExp("^[A-Z]+[a-zA-Z]*\$");
+  final capitalFirstLetterRegExp = new RegExp("^[A-Z]+[a-zA-Z]*\$");
 
   setUpAll(() async {
     await app.start();
@@ -42,8 +42,8 @@ Future main() async {
         await request.get(),
         200,
         body: allOf([
-          hasLength(greaterThan(0)),
-          everyElement(containsPair("name", matches(nameRegExp))),
+          hasLength(2),
+          everyElement(containsPair("name", matches(capitalFirstLetterRegExp))),
           everyElement(containsPair("ladderPosition", greaterThan(0)))
         ]));
   });
@@ -53,8 +53,8 @@ Future main() async {
         await app.client.request("/players/2").get(),
         200,
         body: allOf([
-          containsPair("name", matches(nameRegExp)),
-          containsPair("ladderPosition", greaterThan(0))
+          containsPair("name", "Fran"),
+          containsPair("ladderPosition", 2)
         ]));
   });
 

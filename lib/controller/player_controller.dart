@@ -12,7 +12,7 @@ class PlayerController extends HTTPController {
   }
 
   @httpGet
-  Future<Response> getPlayerByIndex(@HTTPPath("id") int id) async {
+  Future<Response> getPlayerById(@HTTPPath("id") int id) async {
     var query = new Query<Player>()
       ..where.id = whereEqualTo(id);
 
