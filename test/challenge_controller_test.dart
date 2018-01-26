@@ -12,18 +12,10 @@ Future main() async {
     var challenges = [
       new Challenge()
         ..challengeStatus = "Active"
-        ..challengingPlayerId = 7
-        ..defendingPlayerId = 6
-        ..winningPlayerId = 0
-        ..losingPlayerId = 0
         ..winnerScore = 0
         ..loserScore = 0,
       new Challenge()
         ..challengeStatus = "Complete"
-        ..challengingPlayerId = 5
-        ..defendingPlayerId = 4
-        ..winningPlayerId = 5
-        ..losingPlayerId = 4
         ..winnerScore = 10
         ..loserScore = 3,
     ];
